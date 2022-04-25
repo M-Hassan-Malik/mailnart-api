@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "7f76a3ac-9ba2-488c-808a-c32299e059fe",
+		"name": "mail-n-ar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5000/mail/request_rate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"gokulast14@gmail.com  \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/mail/request_rate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"mail",
+						"request_rate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
