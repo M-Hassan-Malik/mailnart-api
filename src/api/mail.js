@@ -11,9 +11,10 @@ router.post(
   GetMailToken,
   async (req, res, next) => {
     try {
+      var body = req.body;
       var FEDEX_ACCOUNT_NUMBER = "510087380";
       const token = JSON.parse(req.token_res);
-      var body = req.body;
+      const access_token = token.access_token;
 
        //console.log("TOKEN ===>", token);
 
@@ -26,6 +27,7 @@ router.post(
       
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
+          //console.log(this.responseText)
           res.json(JSON.parse(this.responseText));
         }
       });
@@ -33,7 +35,7 @@ router.post(
       xhr.open("POST", "https://apis-sandbox.fedex.com/rate/v1/rates/quotes");
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("X-locale", "en_US");
-      xhr.setRequestHeader("Authorization", `Bearer ${token.access_token}`);
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
       
       xhr.send(data);
     } catch (e) {

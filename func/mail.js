@@ -23,7 +23,7 @@ module.exports = {
     xhr.send(data);
   },
 
-  GetRatesInput(FEDEX_ACCOUNT_NUMBER,data) {
+  GetRatesInput(FEDEX_ACCOUNT_NUMBER) {
     return {
       "accountNumber": {
         "value": FEDEX_ACCOUNT_NUMBER
