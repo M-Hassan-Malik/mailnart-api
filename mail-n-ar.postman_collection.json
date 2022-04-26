@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"gokulast14@gmail.com  \"\r\n}",
+					"raw": "{\r\n    \"shipper\": {\r\n        \"address\": {\r\n            \"city\": \"Beverly Hills\",\r\n            \"postalCode\": 90035,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipient\": {\r\n        \"address\": {\r\n            \"city\": \"San Francisco\",\r\n            \"postalCode\": 94105,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"pickupType\": \"DROPOFF_AT_FEDEX_LOCATION\",\r\n    \"serviceType\": \"FEDEX_1_DAY_FREIGHT\",\r\n    \"shipDateStamp\": \"2022-05-10\",\r\n    \"weught_value\": 151,\r\n    \"length\": 30,\r\n    \"width\": 30,\r\n    \"height\": 40\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
