@@ -1,8 +1,7 @@
 const express = require("express");
-
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
-const { GetRatesInput, GetMailToken } = require("../../func/mail");
+const { GetMailToken } = require("../../func/mail");
+const { GetRatesInput } = require("../../func/fedEX_Input");
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.post("/request_rate", GetMailToken, async (req, res, next) => {
 
     //console.log("TOKEN ===>", token);
 
-    const input = GetRatesInput(FEDEX_ACCOUNT_NUMBER, body);
+    const input = GetRatesInput(body);
 
     const data = JSON.stringify(input);
 
@@ -74,8 +73,8 @@ router.post("/request_rate", GetMailToken, async (req, res, next) => {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("X-locale", "en_US");
     xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
-
     xhr.send(data);
+    
   } catch (e) {
     console.log("ERROR trying to call request_rate === ", e);
   }

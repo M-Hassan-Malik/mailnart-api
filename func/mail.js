@@ -23,38 +23,4 @@ module.exports = {
     xhr.send(data);
   },
 
-  GetRatesInput(FEDEX_ACCOUNT_NUMBER, data) {
-    return {
-      accountNumber: {
-        value: FEDEX_ACCOUNT_NUMBER,
-      },
-      rateRequestControlParameters: {
-        returnTransitTimes: true,
-        servicesNeededOnRateFailure: true
-      },
-      requestedShipment: {
-        shipper: data.shipper,
-        recipient: data.recipient,
-        pickupType: data.pickupType,
-        pickupDetail: data.pickupDetail,
-        serviceType: data.serviceType,
-        rateRequestType: ["LIST"],
-        shipDateStamp: data.shipDateStamp,
-        requestedPackageLineItems: [
-          {
-            weight: {
-              units: "LB",
-              value: data.weught_value,
-            },
-            dimensions: {
-              length: data.length,
-              width: data.width,
-              height: data.height,
-              units: "IN",
-            },
-          },
-        ],
-      },
-    };
-  },
 };
