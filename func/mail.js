@@ -23,15 +23,20 @@ module.exports = {
     xhr.send(data);
   },
 
-  GetRatesInput(FEDEX_ACCOUNT_NUMBER,data) {
+  GetRatesInput(FEDEX_ACCOUNT_NUMBER, data) {
     return {
       accountNumber: {
         value: FEDEX_ACCOUNT_NUMBER,
+      },
+      rateRequestControlParameters: {
+        returnTransitTimes: true,
+        servicesNeededOnRateFailure: true
       },
       requestedShipment: {
         shipper: data.shipper,
         recipient: data.recipient,
         pickupType: data.pickupType,
+        pickupDetail: data.pickupDetail,
         serviceType: data.serviceType,
         rateRequestType: ["LIST"],
         shipDateStamp: data.shipDateStamp,

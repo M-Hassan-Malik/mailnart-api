@@ -6,13 +6,13 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:5000/mail/request_rate",
+			"name": "Rate Request",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"shipper\": {\r\n        \"address\": {\r\n            \"city\": \"Beverly Hills\",\r\n            \"postalCode\": 90035,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipient\": {\r\n        \"address\": {\r\n            \"city\": \"San Francisco\",\r\n            \"postalCode\": 94105,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"pickupType\": \"DROPOFF_AT_FEDEX_LOCATION\",\r\n    \"serviceType\": \"FEDEX_1_DAY_FREIGHT\",\r\n    \"shipDateStamp\": \"2022-05-10\",\r\n    \"weught_value\": 151,\r\n    \"length\": 30,\r\n    \"width\": 30,\r\n    \"height\": 40\r\n}",
+					"raw": "{\r\n    \"shipper\": {\r\n        \"address\": {\r\n            \"city\": \"Beverly Hills\",\r\n            \"postalCode\": 90035,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipient\": {\r\n        \"address\": {\r\n            \"city\": \"San Francisco\",\r\n            \"postalCode\": 94105,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"pickupType\": \"DROPOFF_AT_FEDEX_LOCATION\",\r\n    \"pickupDetail\": {\r\n        \"requestType\": \"FUTURE_DAY\"\r\n    },\r\n    \"serviceType\": \"FEDEX_1_DAY_FREIGHT\",\r\n    \"shipDateStamp\": \"2022-04-30\",\r\n    \"weught_value\": 151,\r\n    \"length\": 30,\r\n    \"width\": 30,\r\n    \"height\": 40\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
