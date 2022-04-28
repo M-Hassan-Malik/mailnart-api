@@ -1,7 +1,11 @@
 const express = require("express");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const { GetMailToken } = require("../../func/mail");
-const { createShipment, validate,GetRatesInput } = require("../../func/fedEX_Input");
+const {
+  createShipment,
+  validate,
+  GetRatesInput,
+} = require("../../func/fedEX_Input");
 
 const router = express.Router();
 
@@ -11,9 +15,10 @@ router.post("/request_rate", GetMailToken, (req, res) => {
     const token = JSON.parse(req.token_res);
     const access_token = token.access_token;
 
-    //console.log("TOKEN ===>", token);
+    console.log("TOKEN ===>", token);
 
     const input = GetRatesInput(body);
+    console.log(JSON.stringify(input, null, 2));
 
     const data = JSON.stringify(input);
 
@@ -23,7 +28,7 @@ router.post("/request_rate", GetMailToken, (req, res) => {
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
         try {
-          //console.log(this.responseText)
+          //console.log(this.responseText);
           res.json(JSON.parse(this.responseText));
         } catch (e) {
           res.status(400).json({ error: e });
@@ -53,8 +58,6 @@ router.post("/create_shipment", GetMailToken, (req, res) => {
 
     const data = JSON.stringify(input);
 
-    //console.log("data ===>", data);
-
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
@@ -70,6 +73,7 @@ router.post("/create_shipment", GetMailToken, (req, res) => {
 
     xhr.open("POST", "https://apis-sandbox.fedex.com/ship/v1/shipments");
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-locale", "en_US");
     xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
     xhr.send(data);
   } catch (e) {

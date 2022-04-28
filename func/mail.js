@@ -2,6 +2,7 @@ const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 module.exports = {
   GetMailToken(req, res, next) {
+    
     try {
       // var data = `grant_type=client_credentials&client_id=${process.env.FEDEX_API_KEY}&client_secret=${process.env.FEDEX_SECRET_KEY}`;
       var FEDEX_API_KEY = "l73ef5165d92194507a9845ac76eacd13f";
