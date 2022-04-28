@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "7f76a3ac-9ba2-488c-808a-c32299e059fe",
+		"name": "mail-n-ar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Rate Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shipper\": {\r\n        \"address\": {\r\n            \"city\": \"Beverly Hills\",\r\n            \"stateOrProvinceCode\": \"CA\",\r\n            \"postalCode\": 90209,\r\n            \"countryCode\": \"US\",\r\n            \"residential\": true\r\n        }\r\n    },\r\n    \"recipient\": {\r\n        \"address\": {\r\n            \"city\": \"San Francisco\",\r\n            \"stateOrProvinceCode\": \"CA\",\r\n            \"postalCode\": 94105,\r\n            \"countryCode\": \"US\",\r\n            \"residential\": true\r\n        }\r\n    },\r\n    \"pickupType\": \"DROPOFF_AT_FEDEX_LOCATION\",\r\n    \"pickupDetail\": {\r\n        \"requestType\": \"FUTURE_DAY\"\r\n    },\r\n    \"serviceType\": \"FEDEX_1_DAY_FREIGHT\",\r\n    \"shipDateStamp\": \"2022-04-27\",\r\n    \"weught_value\": 151,\r\n    \"length\": 30,\r\n    \"width\": 30,\r\n    \"height\": 40\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/mail/request_rate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"mail",
+						"request_rate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Craete Shipment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/mail/create_shipment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"mail",
+						"create_shipment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Hassan Sohail\",\r\n    \"email\": \"gokulast14@gmail.com\",\r\n    \"password\": \"pAss1234!@\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -13,7 +13,7 @@ router.post(
   body("items.*.quantity").isInt().withMessage("Each item must contain a valid int property 'quantity'"),
   // Validator
   (req, res, next) => {
-    const params = req.body;
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -23,10 +23,11 @@ router.post(
   },
   async (req, res) => {
     try {
+      const body = req.body;
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
-        line_items: req.body.items.map((item) => {
+        line_items: body.items.map((item) => {
           return {
             price_data: {
               currency: "usd",
