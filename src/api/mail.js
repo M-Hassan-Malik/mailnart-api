@@ -1,7 +1,7 @@
 const express = require("express");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const { GetMailToken } = require("../../func/mail");
-const { createShipment, validate } = require("../../func/fedEX_Input");
+const { createShipment, validate,GetRatesInput } = require("../../func/fedEX_Input");
 
 const router = express.Router();
 

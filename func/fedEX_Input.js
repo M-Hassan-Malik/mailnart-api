@@ -39,11 +39,9 @@ const createShipment = (data) => {
   return {
     requestedShipment: {
       shipper: {
-        address:  {
-          streetLines: ["20 FedEx Parkway, Suite #"],
-          city: "San Francisco",
+        address: {
+          city: "Beverly Hills",
           stateOrProvinceCode: "CA",
-          postalCode: 94105,
           countryCode: "US",
         },
         contact: {
@@ -53,10 +51,8 @@ const createShipment = (data) => {
       recipients: [
         {
           address: {
-            streetLines: ["20 FedEx Parkway, Suite #"],
             city: "San Francisco",
             stateOrProvinceCode: "CA",
-            postalCode: 94105,
             countryCode: "US",
           },
           contact: {
@@ -67,9 +63,9 @@ const createShipment = (data) => {
           },
         },
       ],
-      pickupType: "CONTACT_FEDEX_TO_SCHEDULE",
-      serviceType: "STANDARD_OVERNIGHT",
-      packagingType: "FEDEX_PAK",
+      pickupType: "DROPOFF_AT_FEDEX_LOCATION",
+      serviceType: "FEDEX_1_DAY_FREIGHT",
+      packagingType: "FEDEX_BOX",
       shippingChargesPayment: {
         paymentType: "SENDER",
         payor: {
