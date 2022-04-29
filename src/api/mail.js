@@ -1,24 +1,23 @@
 const express = require("express");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const { GetMailToken } = require("../../func/mail");
+const { GetMailToken } = require("../../func/get_mail-token");
 const {
-  createShipment,
+  createinternationalShipment,
   validate,
-  GetRatesInput,
+  GetInternationalRatesQuotes,
 } = require("../../func/fedEX_Input");
 
 const router = express.Router();
 
-router.post("/request_rate", GetMailToken, (req, res) => {
+router.post("/request_rate/international_return_rate_quotes", GetMailToken, (req, res) => {
   try {
     var body = req.body;
     const token = JSON.parse(req.token_res);
     const access_token = token.access_token;
 
-    console.log("TOKEN ===>", token);
+    //console.log("TOKEN ===>", token);
 
-    const input = GetRatesInput(body);
-    console.log(JSON.stringify(input, null, 2));
+    const input = GetInternationalRatesQuotes(body);
 
     const data = JSON.stringify(input);
 
@@ -29,9 +28,9 @@ router.post("/request_rate", GetMailToken, (req, res) => {
       if (this.readyState === 4) {
         try {
           //console.log(this.responseText);
-          res.json(JSON.parse(this.responseText));
+          res.status(200).json(JSON.parse(this.responseText));
         } catch (e) {
-          res.status(400).json({ error: e });
+          res.status(400).json({ error: this });
         }
       }
     });
@@ -46,40 +45,44 @@ router.post("/request_rate", GetMailToken, (req, res) => {
   }
 });
 
-router.post("/create_shipment", GetMailToken, (req, res) => {
-  try {
-    var body = "req.body";
-    const token = JSON.parse(req.token_res);
-    const access_token = token.access_token;
+router.post(
+  "/create_shipment/international_shipment",
+  GetMailToken,
+  (req, res) => {
+    try {
+      const body = req.body;
+      const token = JSON.parse(req.token_res);
+      const access_token = token.access_token;
 
-    //console.log("TOKEN ===>", token.token_type);
+      //console.log("TOKEN ===>", token.token_type);
 
-    const input = createShipment(body);
+      const input = createinternationalShipment(body);
 
-    const data = JSON.stringify(input);
+      const data = JSON.stringify(input);
 
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
 
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        try {
-          res.json(JSON.parse(this.responseText));
-        } catch (e) {
-          res.json({ error: e, status: this });
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          try {
+            res.status(200).json(JSON.parse(this.responseText));
+          } catch (e) {
+            res.status(400).json({ error: e, status: this });
+          }
         }
-      }
-    });
+      });
 
-    xhr.open("POST", "https://apis-sandbox.fedex.com/ship/v1/shipments");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("X-locale", "en_US");
-    xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
-    xhr.send(data);
-  } catch (e) {
-    console.log("ERROR trying to call request_rate === ", e);
+      xhr.open("POST", "https://apis-sandbox.fedex.com/ship/v1/shipments");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("X-locale", "en_US");
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+      xhr.send(data);
+    } catch (e) {
+      console.log("ERROR trying to call request_rate === ", e);
+    }
   }
-});
+);
 
 router.post("/validate_shipment", GetMailToken, (req, res) => {
   try {

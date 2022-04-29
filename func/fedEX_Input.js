@@ -1,31 +1,62 @@
 const FEDEX_ACCOUNT_NUMBER = "510087380";
 
-const GetRatesInput = (data) => {
+const GetInternationalRatesQuotes = (data) => {
+  // console.log(JSON.stringify(data));
   return {
     accountNumber: {
       value: FEDEX_ACCOUNT_NUMBER,
     },
-    rateRequestControlParameters: {
-      returnTransitTimes: true,
-      servicesNeededOnRateFailure: true,
-    },
     requestedShipment: {
+      shipper: {
+        address: {
+          postalCode: data.shipper.address.postalCode,
+          countryCode: data.shipper.address.countryCode,
+        },
+      },
+      recipient: {
+        address: {
+          postalCode:data.recipient.address.postalCode,
+          countryCode: data.recipient.address.countryCode,
+        },
+      },
       shipDateStamp: data.shipDateStamp,
-      shipper: data.shipper,
-      recipient: data.recipient,
       pickupType: data.pickupType,
+      serviceType: data.serviceType,
+      shipmentSpecialServices: {
+        specialServiceTypes: ["RETURN_SHIPMENT"],
+        returnShipmentDetail: {
+          returnType: "PRINT_RETURN_LABEL",
+        },
+      },
       rateRequestType: ["LIST"],
+      customsClearanceDetail: {
+        dutiesPayment: {
+          paymentType: "SENDER",
+          payor: {
+            responsibleParty: null,
+          },
+        },
+        commodities: [
+          {
+            description: "Camera",
+            quantity: 1,
+            quantityUnits: "PCS",
+            weight: {
+              units: "KG",
+              value: 11,
+            },
+            customsValue: {
+              amount: 100,
+              currency: "SFR",
+            },
+          },
+        ],
+      },
       requestedPackageLineItems: [
         {
           weight: {
-            units: "LB",
-            value: data.weught_value,
-          },
-          dimensions: {
-            length: data.length,
-            width: data.width,
-            height: data.height,
-            units: "IN",
+            units: data.weight.units,
+            value: data.weight.value,
           },
         },
       ],
@@ -33,50 +64,69 @@ const GetRatesInput = (data) => {
   };
 };
 
-const createShipment = (data) => {
+const createinternationalShipment = (data) => {
   return {
+    labelResponseOptions: "URL_ONLY",
     requestedShipment: {
       shipper: {
-        address: {
-          city: "Beverly Hills",
-          stateOrProvinceCode: "CA",
-          countryCode: "US",
-        },
         contact: {
-          phoneNumber: "+12038937991",
+          personName: data.shipper.contact.personName,
+          phoneNumber: data.shipper.contact.phoneNumber,
+        },
+        address: {
+          streetLines: data.shipper.address.streetLines,
+          city: data.shipper.address.city,
+          stateOrProvinceCode: data.shipper.address.stateOrProvinceCode,
+          postalCode: data.shipper.address.postalCode,
+          countryCode: data.shipper.address.countryCode,
         },
       },
       recipients: [
         {
-          address: {
-            city: "San Francisco",
-            stateOrProvinceCode: "CA",
-            countryCode: "US",
-          },
           contact: {
-            phoneNumber: "12038937991",          },
+            personName: data.recipients.contact.personName,
+            phoneNumber: data.recipients.contact.phoneNumber,
+          },
+          address: {
+            streetLines: data.recipients.address.streetLines,
+            city: data.recipients.address.city,
+            stateOrProvinceCode: data.recipients.address.stateOrProvinceCode,
+            postalCode: data.recipients.address.postalCode,
+            countryCode: data.recipients.address.countryCode,
+          },
         },
       ],
-      pickupType: "DROPOFF_AT_FEDEX_LOCATION",
-      serviceType: "FEDEX_2_DAY_FREIGHT",
-      packagingType: "FEDEX_BOX",
+      shipDatestamp: data.shipDateStamp,
+      serviceType: data.serviceType,
+      packagingType: data.packagingType,
+      pickupType: data.pickupType,
+      blockInsightVisibility: false,
       shippingChargesPayment: {
         paymentType: "SENDER",
       },
       labelSpecification: {
-        labelStockType: "STOCK_4X675",
-        imageType: "ZPLII",
+        imageType: "PDF",
+        labelStockType: "PAPER_85X11_TOP_HALF_LABEL",
+      },
+      customsClearanceDetail: data.customsClearanceDetail,
+      shippingDocumentSpecification: {
+        shippingDocumentTypes: ["COMMERCIAL_INVOICE"],
+        commercialInvoiceDetail: {
+          documentFormat: {
+            stockType: "PAPER_LETTER",
+            docType: "PDF",
+          },
+        },
       },
       requestedPackageLineItems: [
         {
           weight: {
-            units: "KG",
-            value: 9,
-          }
+            units: data.weight.units,
+            value: data.weight.value,
+          },
         },
       ],
     },
-    labelResponseOptions: "URL_ONLY",
     accountNumber: {
       value: FEDEX_ACCOUNT_NUMBER,
     },
@@ -159,7 +209,7 @@ const validate = (data) => {
 };
 
 module.exports = {
-  GetRatesInput,
-  createShipment,
+   GetInternationalRatesQuotes,
+  createinternationalShipment,
   validate,
 };
