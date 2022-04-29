@@ -1,10 +1,7 @@
-const FEDEX_ACCOUNT_NUMBER = "510087380";
-
 const GetInternationalRatesQuotes = (data) => {
-  // console.log(JSON.stringify(data));
   return {
     accountNumber: {
-      value: FEDEX_ACCOUNT_NUMBER,
+      value: process.env.FEDEX_ACCOUNT_NUMBER,
     },
     requestedShipment: {
       shipper: {
@@ -128,7 +125,7 @@ const createinternationalShipment = (data) => {
       ],
     },
     accountNumber: {
-      value: FEDEX_ACCOUNT_NUMBER,
+      value: process.env.FEDEX_ACCOUNT_NUMBER,
     },
   };
 };
@@ -185,7 +182,7 @@ const validate = (data) => {
               phoneNumber: "91837962890",
             },
             accountNumber: {
-              value: FEDEX_ACCOUNT_NUMBER,
+              value: process.env.FEDEX_ACCOUNT_NUMBER,
             },
           },
         },

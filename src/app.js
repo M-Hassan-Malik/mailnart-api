@@ -5,13 +5,11 @@ const cors = require("cors");
 const admin = require("firebase-admin");
 const serviceAccount = require("./config/serciveAccount.json");
 
-require("dotenv").config({ path: "/config/keys.env" });
+require("dotenv").config();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
-require("dotenv").config();
 
 const middlewares = require("./middlewares");
 
@@ -23,8 +21,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 app.get("/", (req, res) => res.json({ msg: "running" }));
-app.post("/", (req, res) => res.json({ msg: "running" }));
 
 app.use("/user", require("./api/user"));
 
