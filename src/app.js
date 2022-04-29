@@ -26,6 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => res.json({ msg: "running" }));
 app.post("/", (req, res) => res.json({ msg: "running" }));
 
+app.use("/user", require("./api/user"));
+
 app.use("/auth", require("./api/auth"));
 
 app.use("/payment", require("./api/payment"));
