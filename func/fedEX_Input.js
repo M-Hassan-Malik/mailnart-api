@@ -31,51 +31,98 @@ const GetInternationalGroundRates = (data) => {
   };
 };
 
-const createShipment = (data) => {
+const createinternationalShipment = (data) => {
   return {
+    labelResponseOptions: "URL_ONLY",
     requestedShipment: {
       shipper: {
-        address: {
-          city: "Beverly Hills",
-          stateOrProvinceCode: "CA",
-          countryCode: "US",
-        },
         contact: {
-          phoneNumber: "+12038937991",
+          personName: "SHIPPER NAME",
+          phoneNumber: 1234567890,
+        },
+        address: {
+          streetLines: ["SHIPPER STREET LINE 1"],
+          city: "Memphis",
+          stateOrProvinceCode: "TN",
+          
+          countryCode: "US",
         },
       },
       recipients: [
         {
-          address: {
-            city: "San Francisco",
-            stateOrProvinceCode: "CA",
-            countryCode: "US",
-          },
           contact: {
-            phoneNumber: "12038937991",
+            personName: "RECIPIENT NAME",
+            phoneNumber: 1234567890,
+            companyName: "Recipient Company Name",
+          },
+          address: {
+            streetLines: [
+              "RECIPIENT STREET LINE 1",
+              "RECIPIENT STREET LINE 2",
+              "RECIPIENT STREET LINE 3",
+            ],
+            city: "RICHMOND",
+            stateOrProvinceCode: "BC",
+            countryCode: "CA",
           },
         },
       ],
-      pickupType: "DROPOFF_AT_FEDEX_LOCATION",
-      serviceType: "FEDEX_2_DAY_FREIGHT",
-      packagingType: "FEDEX_BOX",
+      shipDatestamp: "2022-04-29",
+      serviceType: "INTERNATIONAL_PRIORITY",
+      packagingType: "YOUR_PACKAGING",
+      pickupType: "USE_SCHEDULED_PICKUP",
+      blockInsightVisibility: false,
       shippingChargesPayment: {
         paymentType: "SENDER",
       },
       labelSpecification: {
-        labelStockType: "STOCK_4X675",
-        imageType: "ZPLII",
+        imageType: "PDF",
+        labelStockType: "PAPER_85X11_TOP_HALF_LABEL",
+      },
+      customsClearanceDetail: {
+        dutiesPayment: {
+          paymentType: "SENDER",
+        },
+        isDocumentOnly: true,
+        commodities: [
+          {
+            description: "Commodity description",
+            countryOfManufacture: "US",
+            quantity: 1,
+            quantityUnits: "PCS",
+            unitPrice: {
+              amount: 100,
+              currency: "USD",
+            },
+            customsValue: {
+              amount: 100,
+              currency: "USD",
+            },
+            weight: {
+              units: "LB",
+              value: 20,
+            },
+          },
+        ],
+      },
+      shippingDocumentSpecification: {
+        shippingDocumentTypes: ["COMMERCIAL_INVOICE"],
+        commercialInvoiceDetail: {
+          documentFormat: {
+            stockType: "PAPER_LETTER",
+            docType: "PDF",
+          },
+        },
       },
       requestedPackageLineItems: [
         {
           weight: {
-            units: "KG",
-            value: 9,
+            units: "LB",
+            value: 70,
           },
         },
       ],
     },
-    labelResponseOptions: "URL_ONLY",
     accountNumber: {
       value: FEDEX_ACCOUNT_NUMBER,
     },
@@ -159,6 +206,6 @@ const validate = (data) => {
 
 module.exports = {
   GetInternationalGroundRates,
-  createShipment,
+ createinternationalShipment,
   validate,
 };

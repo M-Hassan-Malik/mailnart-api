@@ -1,8 +1,8 @@
 const express = require("express");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const { GetMailToken } = require("../../func/mail");
+const { GetMailToken } = require("../../func/get_mail-token");
 const {
-  createShipment,
+  createinternationalShipment,
   validate,
   GetInternationalGroundRates,
 } = require("../../func/fedEX_Input");
@@ -81,15 +81,15 @@ router.post("/request_rate/international_ground", GetMailToken, (req, res) => {
   }
 });
 
-router.post("/create_shipment", GetMailToken, (req, res) => {
+router.post("/create_shipment/international_shipment", GetMailToken, (req, res) => {
   try {
-    var body = "req.body";
+    const body = req.body;
     const token = JSON.parse(req.token_res);
     const access_token = token.access_token;
 
     //console.log("TOKEN ===>", token.token_type);
 
-    const input = createShipment(body);
+    const input = createinternationalShipment(body);
 
     const data = JSON.stringify(input);
 
