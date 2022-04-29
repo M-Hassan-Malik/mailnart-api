@@ -1,32 +1,28 @@
 const FEDEX_ACCOUNT_NUMBER = "510087380";
 
-const GetRatesInput = (data) => {
+const GetInternationalGroundRates = (data) => {
+  // console.log(JSON.stringify(data));
   return {
     accountNumber: {
       value: FEDEX_ACCOUNT_NUMBER,
     },
-    rateRequestControlParameters: {
-      returnTransitTimes: true,
-      servicesNeededOnRateFailure: true,
-    },
     requestedShipment: {
-      shipDateStamp: data.shipDateStamp,
       shipper: data.shipper,
       recipient: data.recipient,
+      shipDateStamp: data.shipDateStamp,
       pickupType: data.pickupType,
-      pickupDetail: data.pickupDetail,
       serviceType: data.serviceType,
       rateRequestType: ["LIST"],
       requestedPackageLineItems: [
         {
           weight: {
-            units: "LB",
-            value: data.weught_value,
+            units: data.weigth.units,
+            value: data.weigth.value,
           },
           dimensions: {
-            length: data.length,
-            width: data.width,
-            height: data.height,
+            length: data.dimensions.length,
+            width: data.dimensions.width,
+            height: data.dimensions.height,
             units: "IN",
           },
         },
@@ -45,7 +41,7 @@ const createShipment = (data) => {
           countryCode: "US",
         },
         contact: {
-          phoneNumber: "91837462890",
+          phoneNumber: "+12038937991",
         },
       },
       recipients: [
@@ -56,25 +52,15 @@ const createShipment = (data) => {
             countryCode: "US",
           },
           contact: {
-            personName: "Mohsin Sohail",
-            phoneExtension: "91",
-            emailAddress: "mhassan.malik.1997@gmail.com",
-            phoneNumber: "91837962890",
+            phoneNumber: "12038937991",
           },
         },
       ],
       pickupType: "DROPOFF_AT_FEDEX_LOCATION",
-      serviceType: "FEDEX_1_DAY_FREIGHT",
+      serviceType: "FEDEX_2_DAY_FREIGHT",
       packagingType: "FEDEX_BOX",
       shippingChargesPayment: {
         paymentType: "SENDER",
-        payor: {
-          responsibleParty: {
-            accountNumber: {
-              value: FEDEX_ACCOUNT_NUMBER,
-            },
-          },
-        },
       },
       labelSpecification: {
         labelStockType: "STOCK_4X675",
@@ -84,7 +70,7 @@ const createShipment = (data) => {
         {
           weight: {
             units: "KG",
-            value: 10,
+            value: 9,
           },
         },
       ],
@@ -172,7 +158,7 @@ const validate = (data) => {
 };
 
 module.exports = {
-  GetRatesInput,
+  GetInternationalGroundRates,
   createShipment,
   validate,
 };
