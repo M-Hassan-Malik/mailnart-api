@@ -3,7 +3,11 @@ const express = require('express');
 const router = express.Router();
 
 const { body, validationResult } = require("express-validator");
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+
+
+
+console.log('process.env.STRIPE_PRIVATE_KEY -> ',process.env.STRIPE_PUBLISHABLE_KEY)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 router.post(
   "/checkout", 
@@ -39,8 +43,8 @@ router.post(
             quantity: item.quantity,
           }
         }),
-        success_url: `${process.env.CLIENT_URL}/payment-success`,
-        cancel_url: `${process.env.CLIENT_URL}/payment-cancel`,
+        success_url: `https://heuristic-swanson.23-83-37-162.plesk.page/payment-success`,
+        cancel_url: `https://heuristic-swanson.23-83-37-162.plesk.page/payment-cancel`,
       })
       res.json({
         status: true,

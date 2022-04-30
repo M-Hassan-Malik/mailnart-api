@@ -4,8 +4,11 @@ const helmet = require("helmet");
 const cors = require("cors");
 const admin = require("firebase-admin");
 const serviceAccount = require("./config/serciveAccount.json");
+const path = require("path")
 
-require("dotenv").config();
+require("dotenv").config(
+  { path: path.join(__dirname,'config/keys.env')}
+);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
