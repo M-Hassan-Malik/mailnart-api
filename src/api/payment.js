@@ -15,9 +15,9 @@ router.post(
   body("items.*.name")
     .isString()
     .withMessage("Each item must contain a valid string property 'name'"),
-  body("items.*.priceInCents")
+  body("items.*.priceInDollar")
     .isInt()
-    .withMessage("Each item must contain a valid int property 'priceInCents'"),
+    .withMessage("Each item must contain a valid int property 'priceInDollar'"),
   body("items.*.quantity")
     .isInt()
     .withMessage("Each item must contain a valid int property 'quantity'"),
@@ -43,7 +43,7 @@ router.post(
               product_data: {
                 name: item.name,
               },
-              unit_amount: item.priceInCents,
+              unit_amount: item.priceInDollar * 100, // priceInDollars - priceInCents
             },
             quantity: item.quantity,
           };
