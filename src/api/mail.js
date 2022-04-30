@@ -4,6 +4,7 @@ const { GetMailToken } = require("../../func/get_mail-token");
 const {
   createinternationalShipment,
   validate,
+  US_DomesticReturnLabel,
   GetInternationalRatesQuotes,
 } = require("../../func/fedEX_Input");
 
@@ -45,8 +46,44 @@ router.post("/request_rate/international_return_rate_quotes", GetMailToken, (req
   }
 });
 
+router.post("/request_rate/international_return_rate_quotes", GetMailToken, (req, res) => {
+  try {
+    var body = req.body;
+    const token = JSON.parse(req.token_res);
+    const access_token = token.access_token;
+
+    //console.log("TOKEN ===>", token);
+
+    const input = GetInternationalRatesQuotes(body);
+
+    const data = JSON.stringify(input);
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        try {
+          //console.log(this.responseText);
+          res.status(200).json(JSON.parse(this.responseText));
+        } catch (e) {
+          res.status(400).json({ error: this });
+        }
+      }
+    });
+
+    xhr.open("POST", "https://apis-sandbox.fedex.com/rate/v1/rates/quotes");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-locale", "en_US");
+    xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+    xhr.send(data);
+  } catch (e) {
+    console.log("ERROR trying to call request_rate === ", e);
+  }
+});
+
 router.post(
-  "/create_shipment/international_shipment",
+  "/create_shipment/US_domestic_return_label",
   GetMailToken,
   (req, res) => {
     try {
@@ -56,7 +93,7 @@ router.post(
 
       //console.log("TOKEN ===>", token.token_type);
 
-      const input = createinternationalShipment(body);
+      const input = US_DomesticReturnLabel(body);
 
       const data = JSON.stringify(input);
 

@@ -12,7 +12,7 @@ const GetInternationalRatesQuotes = (data) => {
       },
       recipient: {
         address: {
-          postalCode:data.recipient.address.postalCode,
+          postalCode: data.recipient.address.postalCode,
           countryCode: data.recipient.address.countryCode,
         },
       },
@@ -130,6 +130,71 @@ const createinternationalShipment = (data) => {
   };
 };
 
+const US_DomesticReturnLabel = (data) => {
+  return {
+    labelResponseOptions: "URL_ONLY",
+    requestedShipment: {
+      shipper: {
+        contact: {
+          personName: data.shipper.contact.personName,
+          phoneNumber: data.shipper.contact.phoneNumber,
+        },
+        address: {
+          streetLines: data.shipper.address.streetLines,
+          city: data.shipper.address.city,
+          stateOrProvinceCode: data.shipper.address.stateOrProvinceCode,
+          postalCode: data.shipper.address.postalCode,
+          countryCode: data.shipper.address.countryCode,
+        },
+      },
+      recipients: [
+        {
+          contact: {
+            personName: data.recipients.contact.personName,
+            phoneNumber: data.recipients.contact.phoneNumber,
+          },
+          address: {
+            streetLines: data.recipients.address.streetLines,
+            city: data.recipients.address.city,
+            stateOrProvinceCode: data.recipients.address.stateOrProvinceCode,
+            postalCode: data.recipients.address.postalCode,
+            countryCode: data.recipients.address.countryCode,
+          },
+        },
+      ],
+      shipDatestamp: data.shipDateStamp,
+      serviceType: data.serviceType,
+      packagingType: data.packagingType,
+      pickupType: data.pickupType,
+      blockInsightVisibility: false,
+      shippingChargesPayment: {
+        paymentType: "SENDER",
+      },
+      shipmentSpecialServices: {
+        specialServiceTypes: ["RETURN_SHIPMENT"],
+        returnShipmentDetail: {
+          returnType: "PRINT_RETURN_LABEL",
+        },
+      },
+      labelSpecification: {
+        imageType: "PDF",
+        labelStockType: "PAPER_85X11_TOP_HALF_LABEL",
+      },
+      requestedPackageLineItems: [
+        {
+          weight: {
+            value: 1,
+            units: "LB",
+          },
+        },
+      ],
+    },
+    accountNumber: {
+      value: process.env.FEDEX_ACCOUNT_NUMBER,
+    },
+  };
+};
+
 const validate = (data) => {
   return {
     requestedShipment: {
@@ -206,7 +271,8 @@ const validate = (data) => {
 };
 
 module.exports = {
-   GetInternationalRatesQuotes,
+  GetInternationalRatesQuotes,
   createinternationalShipment,
+  US_DomesticReturnLabel,
   validate,
 };
