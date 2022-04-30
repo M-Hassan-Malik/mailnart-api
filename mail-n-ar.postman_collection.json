@@ -36,13 +36,13 @@
 			"response": []
 		},
 		{
-			"name": "Craete Shipment",
+			"name": "Craete Shipment International",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"shipper\": {\r\n        \"contact\": {\r\n            \"personName\": \"Hassan\",\r\n            \"phoneNumber\": 1234567890\r\n        },\r\n        \"address\": {\r\n            \"streetLines\": [\r\n                \"SHIPPER STREET LINE 1\"\r\n            ],\r\n            \"city\": \"Memphis\",\r\n            \"postalCode\": \"38116\",\r\n            \"stateOrProvinceCode\": \"TN\",\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipients\": {\r\n        \"contact\": {\r\n            \"personName\": \"Omair\",\r\n            \"phoneNumber\": 1234567890\r\n        },\r\n        \"address\": {\r\n            \"streetLines\": [\r\n                \"SHIPPER STREET LINE 1\",\r\n                \"RECIPIENT STREET LINE 2\",\r\n                \"RECIPIENT STREET LINE 3\"\r\n            ],\r\n            \"city\": \"RICHMOND\",\r\n            \"postalCode\": \"V7C4V7\",\r\n            \"stateOrProvinceCode\": \"BC\",\r\n            \"countryCode\": \"CA\"\r\n        }\r\n    },\r\n    \"shipDatestamp\": \"2022-04-30\",\r\n    \"serviceType\": \"INTERNATIONAL_PRIORITY\",\r\n    \"packagingType\": \"YOUR_PACKAGING\",\r\n    \"pickupType\": \"USE_SCHEDULED_PICKUP\",\r\n    \"customsClearanceDetail\": {\r\n        \"dutiesPayment\": {\r\n            \"paymentType\": \"SENDER\"\r\n        },\r\n        \"isDocumentOnly\": false,\r\n        \"commodities\": [\r\n            {\r\n                \"description\": \"Commodity description\",\r\n                \"countryOfManufacture\": \"US\",\r\n                \"quantity\": 1,\r\n                \"quantityUnits\": \"PCS\",\r\n                \"unitPrice\": {\r\n                    \"amount\": 100,\r\n                    \"currency\": \"USD\"\r\n                },\r\n                \"customsValue\": {\r\n                    \"amount\": 100,\r\n                    \"currency\": \"USD\"\r\n                },\r\n                \"weight\": {\r\n                    \"units\": \"LB\",\r\n                    \"value\": 20\r\n                }\r\n            }\r\n        ]\r\n    },\r\n    \"weight\": {\r\n        \"units\": \"LB\",\r\n        \"value\": 70\r\n    }\r\n}",
+					"raw": "{\r\n    \"shipper\": {\r\n        \"contact\": {\r\n            \"personName\": \"Hassan\",\r\n            \"phoneNumber\": 1234567890\r\n        },\r\n        \"address\": {\r\n            \"streetLines\": [\r\n                \"SHIPPER STREET LINE 1\"\r\n            ],\r\n            \"city\": \"Memphis\",\r\n            \"postalCode\": \"38116\",\r\n            \"stateOrProvinceCode\": \"TN\",\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipients\": {\r\n        \"contact\": {\r\n            \"personName\": \"Omair\",\r\n            \"phoneNumber\": 1234567890\r\n        },\r\n        \"address\": {\r\n            \"streetLines\": [\r\n                \"SHIPPER STREET LINE 1\",\r\n                \"RECIPIENT STREET LINE 2\",\r\n                \"RECIPIENT STREET LINE 3\"\r\n            ],\r\n            \"city\": \"RICHMOND\",\r\n            \"postalCode\": \"V7C4V7\",\r\n            \"stateOrProvinceCode\": \"BC\",\r\n            \"countryCode\": \"CA\"\r\n        }\r\n    },\r\n    \"shipDatestamp\": \"2022-05-01\",\r\n    \"serviceType\": \"INTERNATIONAL_PRIORITY\",\r\n    \"packagingType\": \"YOUR_PACKAGING\",\r\n    \"pickupType\": \"USE_SCHEDULED_PICKUP\",\r\n    \"customsClearanceDetail\": {\r\n        \"dutiesPayment\": {\r\n            \"paymentType\": \"SENDER\"\r\n        },\r\n        \"isDocumentOnly\": false,\r\n        \"commodities\": [\r\n            {\r\n                \"description\": \"Commodity description\",\r\n                \"countryOfManufacture\": \"US\",\r\n                \"quantity\": 1,\r\n                \"quantityUnits\": \"PCS\",\r\n                \"unitPrice\": {\r\n                    \"amount\": 100,\r\n                    \"currency\": \"USD\"\r\n                },\r\n                \"customsValue\": {\r\n                    \"amount\": 100,\r\n                    \"currency\": \"USD\"\r\n                },\r\n                \"weight\": {\r\n                    \"units\": \"LB\",\r\n                    \"value\": 20\r\n                }\r\n            }\r\n        ]\r\n    },\r\n    \"weight\": {\r\n        \"units\": \"LB\",\r\n        \"value\": 70\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -66,13 +66,43 @@
 			"response": []
 		},
 		{
+			"name": "Craete Shipment US Domestic",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shipper\": {\r\n        \"contact\": {\r\n            \"personName\": \"SHIPPER NAME\",\r\n            \"phoneNumber\": 1234567890\r\n        },\r\n        \"address\": {\r\n            \"streetLines\": [\r\n                \"SHIPPER STREET LINE 1\"\r\n            ],\r\n            \"city\": \"HARRISON\",\r\n            \"stateOrProvinceCode\": \"AR\",\r\n            \"postalCode\": 72601,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipients\": [\r\n        {\r\n            \"contact\": {\r\n                \"personName\": \"RECIPIENT NAME\",\r\n                \"phoneNumber\": 1234567890\r\n            },\r\n            \"address\": {\r\n                \"streetLines\": [\r\n                    \"RECIPIENT STREET LINE 1\",\r\n                    \"RECIPIENT STREET LINE 2\"\r\n                ],\r\n                \"city\": \"Collierville\",\r\n                \"stateOrProvinceCode\": \"TN\",\r\n                \"postalCode\": 38017,\r\n                \"countryCode\": \"US\"\r\n            }\r\n        }\r\n    ],\r\n    \"shipDatestamp\": \"2020-07-03\",\r\n    \"serviceType\": \"PRIORITY_OVERNIGHT\",\r\n    \"packagingType\": \"FEDEX_ENVELOPE\",\r\n    \"pickupType\": \"USE_SCHEDULED_PICKUP\",\r\n    \"weight\": {\r\n        \"value\": 1,\r\n        \"units\": \"LB\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/mail/create_shipment/US_domestic_return_label",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"mail",
+						"create_shipment",
+						"US_domestic_return_label"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Payment checkout",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"name\": \"bat\",\r\n            \"priceInCents\": 20000,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"name\": \"ball\",\r\n            \"priceInCents\": 1000,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"name\": \"bat\",\r\n            \"priceInDollar\": 20,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"name\": \"ball\",\r\n            \"priceInDollar\": 1,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
