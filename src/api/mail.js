@@ -3,6 +3,7 @@ const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const { GetMailToken } = require("../../func/get_mail-token");
 const {
   createinternationalShipment,
+  US_DomesticRateShop,
   validate,
   US_DomesticReturnLabel,
   GetInternationalRatesQuotes,
@@ -46,7 +47,7 @@ router.post("/request_rate/international_return_rate_quotes", GetMailToken, (req
   }
 });
 
-router.post("/request_rate/international_return_rate_quotes", GetMailToken, (req, res) => {
+router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
   try {
     var body = req.body;
     const token = JSON.parse(req.token_res);
@@ -54,7 +55,8 @@ router.post("/request_rate/international_return_rate_quotes", GetMailToken, (req
 
     //console.log("TOKEN ===>", token);
 
-    const input = GetInternationalRatesQuotes(body);
+    const input = US_DomesticRateShop(body);
+    console.log(input)
 
     const data = JSON.stringify(input);
 

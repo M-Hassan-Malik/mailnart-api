@@ -25,7 +25,7 @@ const GetInternationalRatesQuotes = (data) => {
           returnType: "PRINT_RETURN_LABEL",
         },
       },
-      rateRequestType: ["LIST"],
+      rateRequestType: ["ACCOUNT", "LIST"],
       customsClearanceDetail: {
         dutiesPayment: {
           paymentType: "SENDER",
@@ -195,6 +195,40 @@ const US_DomesticReturnLabel = (data) => {
   };
 };
 
+const US_DomesticRateShop = (data) => {
+  //console.log(data)
+  return {
+    accountNumber: {
+      value: process.env.FEDEX_ACCOUNT_NUMBER,
+    },
+    requestedShipment: {
+      shipper: {
+        address: {
+          postalCode: data.shipper.address.postalCode,
+          countryCode: data.shipper.address.countryCode,
+        },
+      },
+      recipient: {
+        address: {
+          postalCode: data.recipient.address.postalCode,
+          countryCode: data.recipient.address.countryCode,
+        },
+      },
+      pickupType: data.pickupType,
+      serviceType: data.serviceType,
+      rateRequestType: ["ACCOUNT", "LIST"],
+      requestedPackageLineItems: [
+        {
+          weight: {
+            units: data.weight.units,
+            value: data.weight.value,
+          },
+        },
+      ],
+    },
+  };
+};
+
 const validate = (data) => {
   return {
     requestedShipment: {
@@ -271,6 +305,7 @@ const validate = (data) => {
 };
 
 module.exports = {
+  US_DomesticRateShop,
   GetInternationalRatesQuotes,
   createinternationalShipment,
   US_DomesticReturnLabel,
