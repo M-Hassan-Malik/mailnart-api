@@ -10,7 +10,6 @@ router.post("/save_order", (req, res) => {
     .doc(body.transactionId)
     .set({
       ...body.order,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       status: 'pending'
     })
     .then((doc) => {

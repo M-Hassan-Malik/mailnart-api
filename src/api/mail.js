@@ -95,9 +95,14 @@ router.post(
 
       //console.log("TOKEN ===>", token.token_type);
 
+      console.log('Body =====>', body)
+
       const input = US_DomesticReturnLabel(body);
 
+      console.log('Input ====>',input)
+
       const data = JSON.stringify(input);
+
 
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
