@@ -8,7 +8,10 @@ router.post("/save_order", (req, res) => {
     .doc(body.uid)
     .collection("orders")
     .doc(body.transactionId)
-    .set(body.order)
+    .set({
+      ...body.order,
+      status: 'pending'
+    })
     .then((doc) => {
       doc.writeTime // if exists -> show error
         ? res.status(200).json({ result: doc })
@@ -16,18 +19,29 @@ router.post("/save_order", (req, res) => {
     });
 });
 
-router.get("/get_orders", (req, res) => {
-  const query = req.query;
+router.post("/get_orders", (req, res) => {
+  const query = req.body;
   userRef
     .doc(query.uid)
     .collection("orders")
-    .doc(query.transactionId)
     .get()
-    .then((doc) => {
-      doc.exists // if exists -> show error
-        ? res.status(200).json({ result: doc.data() })
-        : res.status(400).json({ error: "Order not found" });
-    });
+    .then((querySnapshot) => {
+      let orders = [];
+      querySnapshot.forEach((doc) => {
+        orders.push({
+          id: doc.id,
+          ...doc.data()
+        })
+      })
+
+      res.status(200).json({ result: orders })
+
+    }).catch((err) => {
+      res.status(400).json({
+        status: false,
+        error: err
+      })
+    })
 });
 
 module.exports = router;
