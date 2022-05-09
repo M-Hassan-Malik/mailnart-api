@@ -12,7 +12,6 @@ router.post("/save_order", (req, res) => {
     .collection("orders")
     .doc(body.transactionId)
     .set({
-      transactionIdFromRates:body.transactionId,
       ...body.order,
       status: 'pending'
     })

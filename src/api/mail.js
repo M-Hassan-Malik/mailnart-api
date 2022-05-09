@@ -95,9 +95,14 @@ router.post(
 
       //console.log("TOKEN ===>", token.token_type);
 
+      console.log('Body =====>', body)
+
       const input = US_DomesticReturnLabel(body);
 
+      console.log('Input ====>',input)
+
       const data = JSON.stringify(input);
+
 
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
@@ -162,5 +167,49 @@ router.post("/validate_shipment", GetMailToken, (req, res) => {
     console.log("ERROR trying to call request_rate === ", e);
   }
 });
+
+
+
+// {
+//   "trackingInfo": [
+//   {
+//   "trackingNumberInfo": {
+//   "trackingNumber": "794843185271"
+//   }
+//   }
+//   ],
+//   "includeDetailedScans": true
+//   }
+
+router.post('/track',GetMailToken, (req,res) => {
+  const body = req.body;
+
+  const token = JSON.parse(req.token_res);
+  const access_token = token.access_token;
+
+  // 'input' refers to JSON Payload
+  var data = JSON.stringify(body);
+    
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+
+  xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+      try {
+        res.status(200).json(JSON.parse(this.responseText));
+      } catch (e) {
+        res.status(400).json({ error: e, status: this.status });
+      }
+    }
+  });
+
+  xhr.open("POST", "https://apis-sandbox.fedex.com/track/v1/trackingnumbers");
+  xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-locale", "en_US");
+    xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+
+  xhr.send(data);
+})
+
 
 module.exports = router;
