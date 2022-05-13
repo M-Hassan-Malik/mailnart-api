@@ -42,12 +42,37 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"shipper\": {\r\n        \"address\": {\r\n            \"postalCode\": 65247,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipient\": {\r\n        \"address\": {\r\n            \"postalCode\": 75063,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"shipDateStamp\": \"2022-05-07\",\r\n    \"pickupType\": \"DROPOFF_AT_FEDEX_LOCATION\",\r\n    \"serviceType\": \"FIRST_OVERNIGHT\",\r\n    \"weight\": {\r\n        \"units\": \"LB\",\r\n        \"value\": 10\r\n    }\r\n}",
+					"raw": "{\r\n    \"shipper\": {\r\n        \"address\": {\r\n            \"postalCode\": 65247,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"recipient\": {\r\n        \"address\": {\r\n            \"postalCode\": 75063,\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"weight\": {\r\n        \"units\": \"LB\",\r\n        \"value\": 10\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/mail/request_rate/US-domestic-rate-shop",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"mail",
+						"request_rate",
+						"US-domestic-rate-shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "http://localhost:5000/mail/request_rate/US-domestic-rate-shop",
@@ -207,6 +232,77 @@
 						{
 							"key": "transactionId",
 							"value": "e2f6c9aa-af1e-4930-84b2-67696879df0f"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete my order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/user/get_orders?uid=WNaagmVShQYU4at5ZEaoo1WdLTE2&transactionId=e2f6c9aa-af1e-4930-84b2-67696879df0f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"get_orders"
+					],
+					"query": [
+						{
+							"key": "uid",
+							"value": "WNaagmVShQYU4at5ZEaoo1WdLTE2"
+						},
+						{
+							"key": "transactionId",
+							"value": "e2f6c9aa-af1e-4930-84b2-67696879df0f"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit my order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uid\": \"WNaagmVShQYU4at5ZEaoo1WdLTE2\",\r\n    \"transactionId\" : \"e2f6c9aa-af1e-4930-84b2-67696879df0f\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/get_orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"get_orders"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
 						}
 					]
 				}
