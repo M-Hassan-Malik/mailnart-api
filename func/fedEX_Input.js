@@ -195,7 +195,7 @@ const US_DomesticReturnLabel = (data) => {
   };
 };
 
-const US_DomesticRateShop = (data) => {
+const US_DomesticRateShop = (data,serviceType) => {
   //console.log(data)
   return {
     accountNumber: {
@@ -215,7 +215,7 @@ const US_DomesticRateShop = (data) => {
         },
       },
       pickupType: "USE_SCHEDULED_PICKUP",
-      serviceType: data.serviceType,
+      serviceType: serviceType,
       rateRequestType: ["ACCOUNT", "LIST"],
       requestedPackageLineItems: [
         {
