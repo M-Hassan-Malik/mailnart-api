@@ -61,26 +61,29 @@ router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
 
     //console.log("TOKEN ===>", token);
 
-    const input1 = US_DomesticRateShop(body, "FEDEX_GROUND");
     const input2 = US_DomesticRateShop(body, "FEDEX_EXPRESS_SAVER");
-    //console.log(input)
+    const input1 = US_DomesticRateShop(body, "FEDEX_GROUND");
     const metaData = [JSON.stringify(input1), JSON.stringify(input2)];
 
-
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
     metaData.map((data, i) => {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
           try {
             //console.log(this.responseText);
-            dataToBeResponded[i] = JSON.parse(this.responseText);
+
+            if (typeof JSON.parse(this.responseText) === "object") {
+              dataToBeResponded[i] = JSON.parse(this.responseText);
+            }
+          } catch (e) {
+            //console.log("there is an error");
+            dataToBeResponded[i] = {"error" : e};
+          } finally {
             if (returnNow === true) {
               res.status(200).json(dataToBeResponded);
             }
             returnNow = true;
-          } catch (e) {
-            res.status(400).json({ error: this });
           }
         }
       });
@@ -93,6 +96,7 @@ router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
     });
   } catch (e) {
     console.log("ERROR trying to call request_rate === ", e);
+    //res.status(400).json({ error: e });
   }
 });
 
