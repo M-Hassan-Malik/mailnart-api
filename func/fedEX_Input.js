@@ -214,7 +214,7 @@ const US_DomesticRateShop = (data) => {
           countryCode: data.recipient.address.countryCode,
         },
       },
-      pickupType: data.pickupType,
+      pickupType: "USE_SCHEDULED_PICKUP",
       serviceType: data.serviceType,
       rateRequestType: ["ACCOUNT", "LIST"],
       requestedPackageLineItems: [

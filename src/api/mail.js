@@ -56,7 +56,7 @@ router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
     //console.log("TOKEN ===>", token);
 
     const input = US_DomesticRateShop(body);
-    console.log(input)
+    //console.log(input)
 
     const data = JSON.stringify(input);
 
