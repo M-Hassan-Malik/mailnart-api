@@ -201,6 +201,9 @@ const US_DomesticRateShop = (data,serviceType) => {
     accountNumber: {
       value: process.env.FEDEX_ACCOUNT_NUMBER,
     },
+    rateRequestControlParameters: {
+      returnTransitTimes: true
+    },
     requestedShipment: {
       shipper: {
         address: {
@@ -226,6 +229,7 @@ const US_DomesticRateShop = (data,serviceType) => {
         },
       ],
     },
+   
   };
 };
 
