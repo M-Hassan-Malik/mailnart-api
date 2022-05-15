@@ -64,4 +64,33 @@ router.post(
   }
 );
 
+
+// Payment 
+router.post('/generate_payment_intent', async (req,res,next) => {
+  const params = req.body; 
+  
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: parseFloat(params.rates.subtotal) * 100,
+      currency: 'usd',
+      // Verify your integration in this guide by including this parameter
+      metadata: {integration_check: 'accept_a_payment'},
+    });
+  
+  
+    console.log('paymentIntent -> ',paymentIntent)
+  
+    res.json({
+      status:true,
+      paymentIntent: paymentIntent
+    })
+  } catch (error) {
+    res.json({
+      status:false,
+      err: error
+    }) 
+  } 
+
+})
+
 module.exports = router;
