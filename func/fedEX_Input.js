@@ -226,6 +226,12 @@ const US_DomesticRateShop = (data,serviceType) => {
             units: data.weight.units,
             value: data.weight.value,
           },
+          dimensions: {
+            length: data.dimensions.length,
+            width: data.dimensions.width,
+            height: data.dimensions.height,
+            units: "IN",
+          },
         },
       ],
     },

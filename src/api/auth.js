@@ -43,11 +43,9 @@ router.post(
     //         });
     //       });
   },
-
   // Register User
   async (req, res) => {
-    try {
-      const body = req.body;
+    const body = req.body;
 
       const userRecord = await admin.auth().createUser({
         email: body.email,
@@ -55,43 +53,44 @@ router.post(
         password: body.password,
         displayName: body.fullName,
         disabled: false,
-      });
+      }).then(()=>{
+        const batch = admin.firestore().batch();
+        batch.set(userRef.doc(userRecord.uid).collection("info").doc("details"), {
+          accountInfo: {
+            id: userRecord.uid,
+            fullName: body.fullName,
+            email: body.email,
+            emailVerified: false,
+            password: body.password,
+            created: admin.firestore.FieldValue.serverTimestamp(),
+            disabled: false,
+            googleAuthenticated: false,
+            channelSubscribed: false,
+            type: "user",
+          },
+        });
+        batch.set(userRef.doc(userRecord.uid), {
+          uid: userRecord.uid,
+        });
+        batch.commit().then(()=>{
+          res.status(200).json({
+            result: "ok",
+          });
+        }).catch((err)=>{
+          res.json({
+            status:false,
+            error:err
+          })
+        })
+       
+        }).catch((err)=>{
+          res.json({
+            status:false,
+            error:err
+          })
+        })
       // See the UserRecord reference doc for the contents of userRecord.
       console.log("Successfully created new user.uid:", userRecord.uid);
-
-      //var myBadge = "";
-      // if (params.lifeStyle.filter((n) => n !== "N/A").length >= 6) {
-      //   //filter will return array wihout "N/A"
-      //   myBadge = "Passions Bubbles";
-      // } else myBadge = "Kingdom Gifts Bubbles";
-
-      const batch = admin.firestore().batch();
-      batch.set(userRef.doc(userRecord.uid).collection("info").doc("details"), {
-        accountInfo: {
-          id: userRecord.uid,
-          fullName: body.fullName,
-          email: body.email,
-          emailVerified: false,
-          password: body.password,
-          created: admin.firestore.FieldValue.serverTimestamp(),
-          disabled: false,
-          googleAuthenticated: false,
-          channelSubscribed: false,
-          type: "user",
-        },
-      });
-      batch.set(userRef.doc(userRecord.uid), {
-        uid: userRecord.uid,
-      });
-      await batch.commit();
-      res.status(200).json({
-        result: "ok",
-      });
-    } catch (error) {
-      res.status(400).json({
-        message: error,
-      });
-    }
   }
 );
 

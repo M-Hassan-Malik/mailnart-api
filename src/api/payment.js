@@ -71,7 +71,7 @@ router.post('/generate_payment_intent', async (req,res,next) => {
   
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: parseFloat(params.rates.subtotal) * 100,
+      amount: parseFloat(params.rates) * 100,
       currency: 'usd',
       // Verify your integration in this guide by including this parameter
       metadata: {integration_check: 'accept_a_payment'},
