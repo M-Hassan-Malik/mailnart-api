@@ -11,76 +11,92 @@ const {
 
 const router = express.Router();
 
-router.post("/request_rate/international_return_rate_quotes", GetMailToken, (req, res) => {
-  try {
-    var body = req.body;
-    const token = JSON.parse(req.token_res);
-    const access_token = token.access_token;
+router.post(
+  "/request_rate/international_return_rate_quotes",
+  GetMailToken,
+  (req, res) => {
+    try {
+      var body = req.body;
+      const token = JSON.parse(req.token_res);
+      const access_token = token.access_token;
 
-    //console.log("TOKEN ===>", token);
+      //console.log("TOKEN ===>", token);
 
-    const input = GetInternationalRatesQuotes(body);
+      const input = GetInternationalRatesQuotes(body);
 
-    const data = JSON.stringify(input);
+      const data = JSON.stringify(input);
 
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
 
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        try {
-          //console.log(this.responseText);
-          res.status(200).json(JSON.parse(this.responseText));
-        } catch (e) {
-          res.status(400).json({ error: this });
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          try {
+            //console.log(this.responseText);
+            res.status(200).json(JSON.parse(this.responseText));
+          } catch (e) {
+            res.status(400).json({ error: this });
+          }
         }
-      }
-    });
+      });
 
-    xhr.open("POST", "https://apis-sandbox.fedex.com/rate/v1/rates/quotes");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("X-locale", "en_US");
-    xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
-    xhr.send(data);
-  } catch (e) {
-    console.log("ERROR trying to call request_rate === ", e);
+      xhr.open("POST", "https://apis-sandbox.fedex.com/rate/v1/rates/quotes");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("X-locale", "en_US");
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+      xhr.send(data);
+    } catch (e) {
+      console.log("ERROR trying to call request_rate === ", e);
+    }
   }
-});
+);
 
 router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
   try {
     var body = req.body;
+    var returnNow = false;
+    const dataToBeResponded = [{}, {}];
     const token = JSON.parse(req.token_res);
     const access_token = token.access_token;
 
     //console.log("TOKEN ===>", token);
 
-    const input = US_DomesticRateShop(body);
-    console.log(input)
+    const input2 = US_DomesticRateShop(body, "FEDEX_EXPRESS_SAVER");
+    const input1 = US_DomesticRateShop(body, "FEDEX_GROUND");
+    const metaData = [JSON.stringify(input1), JSON.stringify(input2)];
 
-    const data = JSON.stringify(input);
+    metaData.map((data, i) => {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          try {
+            //console.log(this.responseText);
 
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        try {
-          //console.log(this.responseText);
-          res.status(200).json(JSON.parse(this.responseText));
-        } catch (e) {
-          res.status(400).json({ error: this });
+            if (typeof JSON.parse(this.responseText) === "object") {
+              dataToBeResponded[i] = JSON.parse(this.responseText);
+            }
+          } catch (e) {
+            //console.log("there is an error");
+            dataToBeResponded[i] = {"error" : e};
+          } finally {
+            if (returnNow === true) {
+              res.status(200).json(dataToBeResponded);
+            }
+            returnNow = true;
+          }
         }
-      }
-    });
+      });
 
-    xhr.open("POST", "https://apis-sandbox.fedex.com/rate/v1/rates/quotes");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("X-locale", "en_US");
-    xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
-    xhr.send(data);
+      xhr.open("POST", "https://apis-sandbox.fedex.com/rate/v1/rates/quotes");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("X-locale", "en_US");
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+      xhr.send(data);
+    });
   } catch (e) {
     console.log("ERROR trying to call request_rate === ", e);
+    //res.status(400).json({ error: e });
   }
 });
 
