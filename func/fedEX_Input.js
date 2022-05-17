@@ -170,12 +170,6 @@ const US_DomesticReturnLabel = (data) => {
       shippingChargesPayment: {
         paymentType: "SENDER",
       },
-      shipmentSpecialServices: {
-        specialServiceTypes: ["RETURN_SHIPMENT"],
-        returnShipmentDetail: {
-          returnType: "PRINT_RETURN_LABEL",
-        },
-      },
       labelSpecification: {
         imageType: "PDF",
         labelStockType: "PAPER_85X11_TOP_HALF_LABEL",
@@ -183,26 +177,26 @@ const US_DomesticReturnLabel = (data) => {
       requestedPackageLineItems: [
         {
           weight: {
-            value: 1,
+            value: data.weight.value,
             units: "LB",
           },
         },
       ],
     },
     accountNumber: {
-      value: process.env.FEDEX_ACCOUNT_NUMBER,
+      value: "510087380",
     },
   };
 };
 
-const US_DomesticRateShop = (data,serviceType) => {
+const US_DomesticRateShop = (data, serviceType) => {
   //console.log(data)
   return {
     accountNumber: {
       value: process.env.FEDEX_ACCOUNT_NUMBER,
     },
     rateRequestControlParameters: {
-      returnTransitTimes: true
+      returnTransitTimes: true,
     },
     requestedShipment: {
       shipper: {
@@ -223,7 +217,7 @@ const US_DomesticRateShop = (data,serviceType) => {
       requestedPackageLineItems: [
         {
           weight: {
-            units: data.weight.units,
+            units: "LB",
             value: data.weight.value,
           },
           dimensions: {
@@ -235,7 +229,6 @@ const US_DomesticRateShop = (data,serviceType) => {
         },
       ],
     },
-   
   };
 };
 

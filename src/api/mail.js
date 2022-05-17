@@ -78,7 +78,7 @@ router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
             }
           } catch (e) {
             //console.log("there is an error");
-            dataToBeResponded[i] = {"error" : e};
+            dataToBeResponded[i] = { error: e };
           } finally {
             if (returnNow === true) {
               res.status(200).json(dataToBeResponded);
@@ -109,16 +109,8 @@ router.post(
       const token = JSON.parse(req.token_res);
       const access_token = token.access_token;
 
-      //console.log("TOKEN ===>", token.token_type);
-
-      console.log('Body =====>', body)
-
       const input = US_DomesticReturnLabel(body);
-
-      console.log('Input ====>',input)
-
       const data = JSON.stringify(input);
-
 
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
@@ -184,8 +176,6 @@ router.post("/validate_shipment", GetMailToken, (req, res) => {
   }
 });
 
-
-
 // {
 //   "trackingInfo": [
 //   {
@@ -197,7 +187,7 @@ router.post("/validate_shipment", GetMailToken, (req, res) => {
 //   "includeDetailedScans": true
 //   }
 
-router.post('/track',GetMailToken, (req,res) => {
+router.post("/track", GetMailToken, (req, res) => {
   const body = req.body;
 
   const token = JSON.parse(req.token_res);
@@ -205,7 +195,7 @@ router.post('/track',GetMailToken, (req,res) => {
 
   // 'input' refers to JSON Payload
   var data = JSON.stringify(body);
-    
+
   var xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
 
@@ -221,11 +211,10 @@ router.post('/track',GetMailToken, (req,res) => {
 
   xhr.open("POST", "https://apis-sandbox.fedex.com/track/v1/trackingnumbers");
   xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("X-locale", "en_US");
-    xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+  xhr.setRequestHeader("X-locale", "en_US");
+  xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
 
   xhr.send(data);
-})
-
+});
 
 module.exports = router;
