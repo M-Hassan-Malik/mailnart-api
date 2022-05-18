@@ -176,6 +176,12 @@ const US_DomesticReturnLabel = (data) => {
       },
       requestedPackageLineItems: [
         {
+          dimensions: {
+            length: data.dimensions.length,
+            width: data.dimensions.width,
+            height: data.dimensions.height,
+            units: "IN",
+          },
           weight: {
             value: data.weight.value,
             units: "LB",
@@ -184,7 +190,7 @@ const US_DomesticReturnLabel = (data) => {
       ],
     },
     accountNumber: {
-      value: "510087380",
+      value: process.env.FEDEX_ACCOUNT_NUMBER,
     },
   };
 };
