@@ -14,12 +14,21 @@ router.post(
       .getUserByEmail(body.email)
       .then((user) => {
         res.status(400).json({ result: "already registered" });
+        res.json({
+          status:false,
+          error: "User already exists !"
+        })
       })
-      .catch((err) =>
-        err.code === "auth/user-not-found"
-          ? next()
-          : res.status(404).json({ err: err })
-      );
+      .catch((err) => {
+        if(err.code === "auth/user-not-found") {
+          next()
+        } else {
+          res.json({
+            status:false,
+            error: err
+          })
+        }
+      });
 
     //     userRef
     //       .doc(body.uid)
@@ -53,44 +62,46 @@ router.post(
         password: body.password,
         displayName: body.fullName,
         disabled: false,
-      }).then(()=>{
-        const batch = admin.firestore().batch();
-        batch.set(userRef.doc(userRecord.uid).collection("info").doc("details"), {
-          accountInfo: {
-            id: userRecord.uid,
-            fullName: body.fullName,
-            email: body.email,
-            emailVerified: false,
-            password: body.password,
-            created: admin.firestore.FieldValue.serverTimestamp(),
-            disabled: false,
-            googleAuthenticated: false,
-            channelSubscribed: false,
-            type: "user",
-          },
-        });
-        batch.set(userRef.doc(userRecord.uid), {
-          uid: userRecord.uid,
-        });
-        batch.commit().then(()=>{
-          res.status(200).json({
-            result: "ok",
-          });
-        }).catch((err)=>{
+      }).catch((err)=>{
           res.json({
             status:false,
-            error:err
+            error:err.message
           })
+      })
+
+
+
+      const batch = admin.firestore().batch();
+      batch.set(userRef.doc(userRecord.uid).collection("info").doc("details"), {
+        accountInfo: {
+          id: userRecord.uid,
+          fullName: body.fullName,
+          email: body.email,
+          emailVerified: false,
+          password: body.password,
+          created: admin.firestore.FieldValue.serverTimestamp(),
+          disabled: false,
+          googleAuthenticated: false,
+          channelSubscribed: false,
+          type: "user",
+        },
+      })
+      batch.set(userRef.doc(userRecord.uid), {
+        uid: userRecord.uid,
+      });
+      batch.commit().then(()=>{
+        res.status(200).json({
+          result: "ok",
+        });
+      }).catch((err)=>{
+        res.json({
+          status:false,
+          error:err.message
         })
-       
-        }).catch((err)=>{
-          res.json({
-            status:false,
-            error:err
-          })
-        })
-      // See the UserRecord reference doc for the contents of userRecord.
-      console.log("Successfully created new user.uid:", userRecord.uid);
+      })
+     
+     
+    
   }
 );
 
