@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { body, validationResult } = require("express-validator");
 
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 router.post(
   "/checkout",
@@ -63,5 +63,39 @@ router.post(
     }
   }
 );
+
+
+// Payment 
+router.post('/generate_payment_intent', async (req,res,next) => {
+  const params = req.body; 
+  
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: parseFloat(params.rates) * 100,
+      currency: 'usd',
+      // Verify your integration in this guide by including this parameter
+      metadata: {integration_check: 'accept_a_payment'},
+      payment_method_types: ['card'],
+      
+    },
+    {
+      stripeAccount: "acct_1Kll3ZJECYjmxs6z"
+    });
+  
+  
+    console.log('paymentIntent -> ',paymentIntent)
+  
+    res.json({
+      status:true,
+      paymentIntent: paymentIntent
+    })
+  } catch (error) {
+    res.json({
+      status:false,
+      err: error
+    }) 
+  } 
+
+})
 
 module.exports = router;

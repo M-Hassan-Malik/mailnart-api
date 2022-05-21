@@ -78,7 +78,7 @@ router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
             }
           } catch (e) {
             //console.log("there is an error");
-            dataToBeResponded[i] = {"error" : e};
+            dataToBeResponded[i] = { error: e };
           } finally {
             if (returnNow === true) {
               res.status(200).json(dataToBeResponded);
@@ -109,11 +109,12 @@ router.post(
       const token = JSON.parse(req.token_res);
       const access_token = token.access_token;
 
-      //console.log("TOKEN ===>", token.token_type);
-
       const input = US_DomesticReturnLabel(body);
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> fe38ba302366bc4d06a7b3f42ffdfce317ae1d1f
       const data = JSON.stringify(input);
 
       var xhr = new XMLHttpRequest();
@@ -178,6 +179,47 @@ router.post("/validate_shipment", GetMailToken, (req, res) => {
   } catch (e) {
     console.log("ERROR trying to call request_rate === ", e);
   }
+});
+
+// {
+//   "trackingInfo": [
+//   {
+//   "trackingNumberInfo": {
+//   "trackingNumber": "794843185271"
+//   }
+//   }
+//   ],
+//   "includeDetailedScans": true
+//   }
+
+router.post("/track", GetMailToken, (req, res) => {
+  const body = req.body;
+
+  const token = JSON.parse(req.token_res);
+  const access_token = token.access_token;
+
+  // 'input' refers to JSON Payload
+  var data = JSON.stringify(body);
+
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+
+  xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+      try {
+        res.status(200).json(JSON.parse(this.responseText));
+      } catch (e) {
+        res.status(400).json({ error: e, status: this.status });
+      }
+    }
+  });
+
+  xhr.open("POST", "https://apis-sandbox.fedex.com/track/v1/trackingnumbers");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-locale", "en_US");
+  xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+
+  xhr.send(data);
 });
 
 module.exports = router;
