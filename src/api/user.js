@@ -6,20 +6,15 @@ const db = admin.firestore();
 
 router.post("/save_order", (req, res) => {
   const body = req.body;
+
+  console.log('body -> ',body);
   userRef
     .doc(body.uid)
     .collection("orders")
-<<<<<<< HEAD
-    .doc(body.transactionId)
-    .set({
-      ...body.order,
-      status: 'pending'
-=======
     .doc(body.order.transactionId)
     .set({
       ...body.order,
       status: "pending",
->>>>>>> fe38ba302366bc4d06a7b3f42ffdfce317ae1d1f
     })
     .then((doc) => {
       doc.writeTime // if exists -> show error
@@ -39,20 +34,6 @@ router.post("/get_orders", (req, res) => {
       querySnapshot.forEach((doc) => {
         orders.push({
           id: doc.id,
-<<<<<<< HEAD
-          ...doc.data()
-        })
-      })
-
-      res.status(200).json({ result: orders })
-
-    }).catch((err) => {
-      res.status(400).json({
-        status: false,
-        error: err
-      })
-    })
-=======
           ...doc.data(),
         });
       });
@@ -65,7 +46,6 @@ router.post("/get_orders", (req, res) => {
         error: err,
       });
     });
->>>>>>> fe38ba302366bc4d06a7b3f42ffdfce317ae1d1f
 });
 
 router.post("/edit_orders", (req, res) => {

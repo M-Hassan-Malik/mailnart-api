@@ -1,4 +1,6 @@
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var production = "https://apis.fedex.com";
+
 
 module.exports = {
   GetMailToken(req, res, next) {
@@ -17,7 +19,7 @@ module.exports = {
         }
       });
 
-      xhr.open("POST", "https://apis-sandbox.fedex.com/oauth/token");
+      xhr.open("POST", `${production}/oauth/token`);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.send(data);
     } catch (e) {
