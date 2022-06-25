@@ -6,6 +6,8 @@ const db = admin.firestore();
 
 router.post("/save_order", (req, res) => {
   const body = req.body;
+
+  console.log('body -> ',body);
   userRef
     .doc(body.uid)
     .collection("orders")
