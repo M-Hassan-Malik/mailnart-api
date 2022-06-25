@@ -17,7 +17,7 @@ module.exports = {
         }
       });
 
-      xhr.open("POST", "https://apis-sandbox.fedex.com/oauth/token");
+      xhr.open("POST", "https://apis.fedex.com/oauth/token");
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.send(data);
     } catch (e) {
