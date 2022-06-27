@@ -1,8 +1,11 @@
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
+
+var dev = "https://apis-sandbox.fedex.com";
+var production = "https://apis.fedex.com"
+
 module.exports = {
-  GetMailToken(req, res, next) {
-    
+  GetMailToken(req, res, next) {    
     try {
     var data = `grant_type=client_credentials&client_id=${process.env.FEDEX_API_KEY}&client_secret=${process.env.FEDEX_SECRET_KEY}`;
 
@@ -17,7 +20,7 @@ module.exports = {
         }
       });
 
-      xhr.open("POST", "https://apis-sandbox.fedex.com/oauth/token");
+      xhr.open("POST", `${production}/oauth/token`);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.send(data);
     } catch (e) {
