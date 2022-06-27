@@ -131,6 +131,8 @@ const createinternationalShipment = (data) => {
 };
 
 const US_DomesticReturnLabel = (data) => {
+      console.log(data)
+
   return {
     labelResponseOptions: "URL_ONLY",
     requestedShipment: {
@@ -162,7 +164,7 @@ const US_DomesticReturnLabel = (data) => {
           },
         },
       ],
-      shipDatestamp: data.shipDateStamp,
+      shipDatestamp: data.shipDatestamp,
       serviceType: data.serviceType,
       packagingType: data.packagingType,
       pickupType: data.pickupType,
@@ -186,8 +188,14 @@ const US_DomesticReturnLabel = (data) => {
             value: data.weight.value,
             units: "LB",
           },
+          // dimensions: {
+          //   length: data.dimensions.length,
+          //   width: data.dimensions.width,
+          //   height: data.dimensions.height,
+          //   units: "IN",
+          // },
         },
-      ],
+      ]
     },
     accountNumber: {
       value: process.env.FEDEX_ACCOUNT_NUMBER,

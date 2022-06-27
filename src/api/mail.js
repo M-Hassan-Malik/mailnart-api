@@ -9,8 +9,9 @@ const {
   GetInternationalRatesQuotes,
 } = require("../../func/fedEX_Input");
 
+var production = "https://apis.fedex.com";
 var dev = "https://apis-sandbox.fedex.com";
-var production = "https://ws.fedex.com:443/web-services"
+
 
 const router = express.Router();
 
@@ -43,7 +44,7 @@ router.post(
         }
       });
 
-      xhr.open("POST", `${production}/rate/v1/rates/quotes`);
+      xhr.open("POST", "https://apis.fedex.com/rate/v1/rates/quotes");
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("X-locale", "en_US");
       xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
@@ -91,7 +92,7 @@ router.post("/request_rate/US-domestic-rate-shop", GetMailToken, (req, res) => {
         }
       });
 
-      xhr.open("POST", `${production}/rate/v1/rates/quotes`);
+      xhr.open("POST", `${dev}/rate/v1/rates/quotes`);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("X-locale", "en_US");
       xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
@@ -212,7 +213,7 @@ router.post("/track", GetMailToken, (req, res) => {
     }
   });
 
-  xhr.open("POST", "https://apis-sandbox.fedex.com/track/v1/trackingnumbers");
+  xhr.open("POST", `${dev}/track/v1/trackingnumbers`);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.setRequestHeader("X-locale", "en_US");
   xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);

@@ -1,4 +1,6 @@
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var production = "https://apis.fedex.com";
+var dev = "https://apis-sandbox.fedex.com";
 
 
 var dev = "https://apis-sandbox.fedex.com";
@@ -20,7 +22,7 @@ module.exports = {
         }
       });
 
-      xhr.open("POST", `${production}/oauth/token`);
+      xhr.open("POST", `${dev}/oauth/token`);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.send(data);
     } catch (e) {
